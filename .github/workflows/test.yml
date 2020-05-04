@@ -1,10 +1,6 @@
 name: "build-test"
-on: # rebuild any PRs and main branch changes
+on:
   pull_request:
-  push:
-    branches:
-      - master
-      - 'releases/*'
 
 jobs:
   build: # make sure build/ci work properly
@@ -19,5 +15,5 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: ./
-      with: 
-        milliseconds: 1000
+      with:
+        resultPath: dummy_coverage/.last_run.json
