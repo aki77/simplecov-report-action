@@ -32,10 +32,10 @@ const deleteOldComments = async (pullRequestId: number): Promise<void> => {
   }
 }
 
-export async function report(coveredPercent: number, minCoverage: number): Promise<void> {
+export async function report(coveredPercent: number, failedThreshold: number): Promise<void> {
   const summaryTable = markdownTable([
-    ['Covered', 'Minimum'],
-    [`${coveredPercent}%`, `${minCoverage}%`]
+    ['Covered', 'Threshold'],
+    [`${coveredPercent}%`, `${failedThreshold}%`]
   ])
 
   const pullRequestId = github.context.issue.number

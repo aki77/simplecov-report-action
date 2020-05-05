@@ -3603,17 +3603,17 @@ const report_1 = __webpack_require__(684);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const minCoverage = Number.parseInt(core.getInput('minCoverage'), 10);
-            core.debug(`minCoverage ${minCoverage}`);
+            const failedThreshold = Number.parseInt(core.getInput('failedThreshold'), 10);
+            core.debug(`failedThreshold ${failedThreshold}`);
             const resultPath = core.getInput('resultPath');
             core.debug(`resultPath ${resultPath}`);
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-require-imports
             const json = require(path_1.default.resolve(process.env.GITHUB_WORKSPACE, resultPath));
             const coveredPercent = json.result.covered_percent;
-            if (coveredPercent < minCoverage) {
-                throw new Error(`Coverage is less than ${minCoverage}%. (${coveredPercent}%)`);
+            if (coveredPercent < failedThreshold) {
+                throw new Error(`Coverage is less than ${failedThreshold}%. (${coveredPercent}%)`);
             }
-            yield report_1.report(coveredPercent, minCoverage);
+            yield report_1.report(coveredPercent, failedThreshold);
         }
         catch (error) {
             core.setFailed(error.message);
@@ -9081,11 +9081,11 @@ const deleteOldComments = (pullRequestId) => __awaiter(void 0, void 0, void 0, f
         });
     }
 });
-function report(coveredPercent, minCoverage) {
+function report(coveredPercent, failedThreshold) {
     return __awaiter(this, void 0, void 0, function* () {
         const summaryTable = markdown_table_1.default([
-            ['Covered', 'Minimum'],
-            [`${coveredPercent}%`, `${minCoverage}%`]
+            ['Covered', 'Threshold'],
+            [`${coveredPercent}%`, `${failedThreshold}%`]
         ]);
         const pullRequestId = github.context.issue.number;
         if (!pullRequestId) {
