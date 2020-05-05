@@ -9057,23 +9057,47 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(470));
 const github = __importStar(__webpack_require__(469));
 const markdown_table_1 = __importDefault(__webpack_require__(366));
+const HEADER = '## Coverage Report';
+const issues = () => {
+    return new github.GitHub(core.getInput('token')).issues;
+};
+const getOldCommentIds = (pullRequestId) => __awaiter(void 0, void 0, void 0, function* () {
+    const { data: existingComments } = yield issues().listComments({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        issue_number: pullRequestId
+    });
+    return existingComments.filter(({ body }) => body.startsWith(HEADER)).map(({ id }) => id);
+});
+const deleteOldComments = (pullRequestId) => __awaiter(void 0, void 0, void 0, function* () {
+    const ids = yield getOldCommentIds(pullRequestId);
+    for (const id of ids) {
+        issues().deleteComment({
+            owner: github.context.repo.owner,
+            repo: github.context.repo.repo,
+            // eslint-disable-next-line @typescript-eslint/camelcase
+            comment_id: id
+        });
+    }
+});
 function report(coveredPercent, minCoverage) {
     return __awaiter(this, void 0, void 0, function* () {
         const summaryTable = markdown_table_1.default([
             ['Covered', 'Minimum'],
             [`${coveredPercent}%`, `${minCoverage}%`]
         ]);
-        const octokit = new github.GitHub(core.getInput('token'));
         const pullRequestId = github.context.issue.number;
         if (!pullRequestId) {
             throw new Error('Cannot find the PR id.');
         }
-        yield octokit.issues.createComment({
+        deleteOldComments(pullRequestId);
+        yield issues().createComment({
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
             // eslint-disable-next-line @typescript-eslint/camelcase
             issue_number: pullRequestId,
-            body: `## Coverage
+            body: `${HEADER}
 ${summaryTable}
 `
         });
