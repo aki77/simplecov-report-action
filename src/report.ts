@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import markdownTable from 'markdown-table'
 
-const HEADER = '## Coverage Report'
+const HEADER = '## Simplecov Report'
 
 const issues = (): github.GitHub['issues'] => {
   return new github.GitHub(core.getInput('token')).issues

@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "simplecov-report",
   "version": "0.1.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Simplecov Report",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",

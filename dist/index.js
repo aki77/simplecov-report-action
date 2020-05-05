@@ -9057,7 +9057,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(470));
 const github = __importStar(__webpack_require__(469));
 const markdown_table_1 = __importDefault(__webpack_require__(366));
-const HEADER = '## Coverage Report';
+const HEADER = '## Simplecov Report';
 const issues = () => {
     return new github.GitHub(core.getInput('token')).issues;
 };
