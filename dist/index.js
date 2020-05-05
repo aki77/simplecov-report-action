@@ -3586,6 +3586,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -3594,6 +3597,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const path_1 = __importDefault(__webpack_require__(622));
 const core = __importStar(__webpack_require__(470));
 const report_1 = __webpack_require__(684);
 function run() {
@@ -3603,8 +3607,8 @@ function run() {
             core.debug(`minCoverage ${minCoverage}`);
             const resultPath = core.getInput('resultPath');
             core.debug(`resultPath ${resultPath}`);
-            // eslint-disable-next-line @typescript-eslint/no-require-imports
-            const json = require(resultPath);
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-require-imports
+            const json = require(path_1.default.resolve(process.env.GITHUB_WORKSPACE, resultPath));
             const coveredPercent = json.result.covered_percent;
             if (coveredPercent < minCoverage) {
                 throw new Error(`Coverage is less than ${minCoverage}%. (${coveredPercent}%)`);
