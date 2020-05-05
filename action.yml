@@ -10,6 +10,9 @@ inputs:
     description: "json path"
     default: "coverage/.last_run.json"
     required: false
+  token:
+    description: "Github token"
+    required: true
 runs:
   using: "node12"
   main: "dist/index.js"
