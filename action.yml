@@ -1,10 +1,18 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: "Simplecov Report"
+description: "Simplecov Report"
+author: aki77
 inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  minCoverage:
+    description: "min coverage"
+    default: "90"
+    required: false
+  resultPath:
+    description: "json path"
+    default: "coverage/.last_run.json"
+    required: false
+  token:
+    description: "Github token"
+    required: true
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node12"
+  main: "dist/index.js"

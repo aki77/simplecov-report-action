@@ -1,16 +1,30 @@
+import path from 'path'
 import * as core from '@actions/core'
-import {wait} from './wait'
+import {report} from './report'
+
+interface Result {
+  result: {
+    covered_percent: number
+  }
+}
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    const minCoverage: number = Number.parseInt(core.getInput('minCoverage'), 10)
+    core.debug(`minCoverage ${minCoverage}`)
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const resultPath: string = core.getInput('resultPath')
+    core.debug(`resultPath ${resultPath}`)
 
-    core.setOutput('time', new Date().toTimeString())
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-require-imports
+    const json = require(path.resolve(process.env.GITHUB_WORKSPACE!, resultPath)) as Result
+    const coveredPercent = json.result.covered_percent
+
+    if (coveredPercent < minCoverage) {
+      throw new Error(`Coverage is less than ${minCoverage}%. (${coveredPercent}%)`)
+    }
+
+    await report(coveredPercent, minCoverage)
   } catch (error) {
     core.setFailed(error.message)
   }
