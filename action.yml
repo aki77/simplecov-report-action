@@ -2,8 +2,8 @@ name: "Simplecov Report"
 description: "Simplecov Report"
 author: aki77
 inputs:
-  minCoverage:
-    description: "min coverage"
+  failedThreshold:
+    description: Failed threshold
     default: "90"
     required: false
   resultPath:
