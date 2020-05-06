@@ -1,6 +1,9 @@
 name: "Simplecov Report"
 description: "Simplecov Report"
 author: aki77
+branding:
+  icon: check-square
+  color: green
 inputs:
   failedThreshold:
     description: Failed threshold
