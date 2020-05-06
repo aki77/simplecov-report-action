@@ -21,12 +21,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-
       - name: Test
-        run: npm test
+        run: bundle exec rspec
 
       - name: Simplecov Report
         uses: aki77/simplecov-report-action@v1
@@ -34,4 +31,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-[![Image from Gyazo](https://i.gyazo.com/1c714c9a698a3acc425fa9cae5707e87.png)](https://gyazo.com/1c714c9a698a3acc425fa9cae5707e87)
+![Demo](https://i.gyazo.com/c4e572c91fe8048c95392ea3ddce79f5.png)
