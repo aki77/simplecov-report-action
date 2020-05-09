@@ -1,6 +1,6 @@
 {
   "name": "simplecov-report",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Simplecov Report",
   "main": "lib/main.js",
@@ -22,11 +22,12 @@
     "node",
     "setup"
   ],
-  "author": "YourNameOrOrganization",
+  "author": "aki77",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.4",
     "@actions/github": "^2.1.1",
+    "@aki77/actions-replace-comment": "^0.1.0",
     "markdown-table": "^2.0.0"
   },
   "devDependencies": {
