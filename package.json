@@ -1,6 +1,6 @@
 {
   "name": "simplecov-report",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "private": true,
   "description": "Simplecov Report",
   "main": "lib/main.js",
@@ -26,8 +26,8 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.4",
-    "@actions/github": "^2.1.1",
-    "@aki77/actions-replace-comment": "^0.1.0",
+    "@actions/github": "^4.0.0",
+    "@aki77/actions-replace-comment": "^0.4.1",
     "markdown-table": "^2.0.0"
   },
   "devDependencies": {
@@ -45,6 +45,6 @@
     "js-yaml": "^3.13.1",
     "prettier": "^1.19.1",
     "ts-jest": "^25.5.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.6"
   }
 }
