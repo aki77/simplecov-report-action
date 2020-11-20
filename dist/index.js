@@ -707,10 +707,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(__webpack_require__(622));
 const core = __importStar(__webpack_require__(470));
+const github = __importStar(__webpack_require__(469));
 const report_1 = __webpack_require__(684);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            if (!github.context.issue.number) {
+                core.warning('Cannot find the PR id.');
+                return;
+            }
             const failedThreshold = Number.parseInt(core.getInput('failedThreshold'), 10);
             core.debug(`failedThreshold ${failedThreshold}`);
             const resultPath = core.getInput('resultPath');
