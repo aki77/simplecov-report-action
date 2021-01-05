@@ -710,6 +710,7 @@ const core = __importStar(__webpack_require__(470));
 const github = __importStar(__webpack_require__(469));
 const report_1 = __webpack_require__(684);
 function run() {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             if (!github.context.issue.number) {
@@ -722,7 +723,10 @@ function run() {
             core.debug(`resultPath ${resultPath}`);
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
             const json = require(path_1.default.resolve(process.env.GITHUB_WORKSPACE, resultPath));
-            const coveredPercent = json.result.covered_percent;
+            const coveredPercent = (_a = json.result.covered_percent) !== null && _a !== void 0 ? _a : json.result.line;
+            if (coveredPercent === undefined) {
+                throw new Error('Coverage is undefined!');
+            }
             if (coveredPercent < failedThreshold) {
                 throw new Error(`Coverage is less than ${failedThreshold}%. (${coveredPercent}%)`);
             }

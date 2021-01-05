@@ -5,7 +5,8 @@ import {report} from './report'
 
 interface Result {
   result: {
-    covered_percent: number
+    covered_percent?: number // NOTE: simplecov < 0.21.0
+    line?: number
   }
 }
 
@@ -24,7 +25,11 @@ async function run(): Promise<void> {
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
     const json = require(path.resolve(process.env.GITHUB_WORKSPACE!, resultPath)) as Result
-    const coveredPercent = json.result.covered_percent
+    const coveredPercent = json.result.covered_percent ?? json.result.line
+
+    if (coveredPercent === undefined) {
+      throw new Error('Coverage is undefined!')
+    }
 
     if (coveredPercent < failedThreshold) {
       throw new Error(`Coverage is less than ${failedThreshold}%. (${coveredPercent}%)`)
