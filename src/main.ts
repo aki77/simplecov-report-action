@@ -31,11 +31,11 @@ async function run(): Promise<void> {
       throw new Error('Coverage is undefined!')
     }
 
+    await report(coveredPercent, failedThreshold)
+
     if (coveredPercent < failedThreshold) {
       throw new Error(`Coverage is less than ${failedThreshold}%. (${coveredPercent}%)`)
     }
-
-    await report(coveredPercent, failedThreshold)
   } catch (error) {
     core.setFailed(error.message)
   }
