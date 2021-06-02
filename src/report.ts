@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import replaceComment from '@aki77/actions-replace-comment'
-import markdownTable from 'markdown-table'
+import {markdownTable} from 'markdown-table'
 
 export async function report(coveredPercent: number, failedThreshold: number): Promise<void> {
   const summaryTable = markdownTable([
