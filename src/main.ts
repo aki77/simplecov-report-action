@@ -37,7 +37,9 @@ async function run(): Promise<void> {
       throw new Error(`Coverage is less than ${failedThreshold}%. (${coveredPercent}%)`)
     }
   } catch (error) {
-    core.setFailed(error.message)
+    if (error instanceof Error) {
+      core.setFailed(error.message)
+    }
   }
 }
 
