@@ -1,6 +1,6 @@
 {
   "name": "simplecov-report",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "private": true,
   "description": "Simplecov Report",
   "main": "lib/main.js",
