@@ -10,17 +10,26 @@ export async function report(coveredPercent: number, failedThreshold: number): P
   ])
 
   const pullRequestId = github.context.issue.number
-  if (!pullRequestId) {
-    throw new Error('Cannot find the PR id.')
+  if (pullRequestId) {
+    await replaceComment({
+      token: core.getInput('token', {required: true}),
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      issue_number: pullRequestId,
+      body: `## Simplecov Report
+  ${summaryTable}
+  `
+    })
   }
 
-  await replaceComment({
-    token: core.getInput('token', {required: true}),
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    issue_number: pullRequestId,
-    body: `## Simplecov Report
-${summaryTable}
-`
-  })
+  await core.summary
+    .addHeading('Simplecov Report')
+    .addTable([
+      [
+        {data: 'Covered', header: true},
+        {data: 'Threshold', header: true}
+      ],
+      [`${coveredPercent}%`, `${failedThreshold}%`]
+    ])
+    .write()
 }

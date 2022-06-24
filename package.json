@@ -1,6 +1,6 @@
 {
   "name": "simplecov-report",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "private": true,
   "description": "Simplecov Report",
   "main": "lib/main.js",
@@ -33,7 +33,7 @@
   "devDependencies": {
     "@types/jest": "^27.0.2",
     "@types/markdown-table": "^3.0.0",
-    "@types/node": "^12.12.38",
+    "@types/node": "^16",
     "@typescript-eslint/parser": "^5.16.0",
     "@zeit/ncc": "^0.22.3",
     "eslint": "^8.12.0",
@@ -46,5 +46,9 @@
     "prettier": "^2.1.2",
     "ts-jest": "^27.0.5",
     "typescript": "^4.0.3"
+  },
+  "volta": {
+    "node": "16.15.1",
+    "yarn": "1.22.19"
   }
 }
