@@ -1816,7 +1816,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * @typedef Options
  *   Configuration (optional).
- * @property {string|null|Array<string|null|undefined>} [align]
+ * @property {string|null|ReadonlyArray<string|null|undefined>} [align]
  *   One style for all columns, or styles for their respective columns.
  *   Each style is either `'l'` (left), `'r'` (right), or `'c'` (center).
  *   Other values are treated as `''`, which doesn’t place the colon in the
@@ -1961,7 +1961,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Generate a markdown ([GFM](https://docs.github.com/en/github/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables)) table..
  *
- * @param {Array<Array<string|null|undefined>>} table
+ * @param {ReadonlyArray<ReadonlyArray<string|null|undefined>>} table
  *   Table data (matrix of strings).
  * @param {Options} [options]
  *   Configuration (optional).
