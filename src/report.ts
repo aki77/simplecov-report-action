@@ -10,7 +10,11 @@ export async function report(coveredPercent: number, failedThreshold: number, pr
   ])
 
   const title = customTitle ? `## ${customTitle} Simplecov Report` : '## Simplecov Report' 
+  core.debug(`title ${title}`)
+
   const pullRequestId = prId || github.context.issue.number
+  core.debug(`pullRequestId ${pullRequestId}`)
+
   if (pullRequestId) {
     await replaceComment({
       token: core.getInput('token', {required: true}),
@@ -26,7 +30,7 @@ export async function report(coveredPercent: number, failedThreshold: number, pr
   }
 
   await core.summary
-    .addHeading('Simplecov Report')
+    .addHeading(`${customTitle} Simplecov Report`)
     .addTable([
       [
         {data: 'Covered', header: true},

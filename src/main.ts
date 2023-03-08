@@ -17,8 +17,8 @@ async function run(): Promise<void> {
     const resultPath: string = core.getInput('resultPath')
     core.debug(`resultPath ${resultPath}`)
 
-    const pullRequestId: number = Number.parseInt(core.getInput('pullRequestId'), 10)
-    core.debug(`pullRequestId ${pullRequestId}`)
+    const prId: number = Number.parseInt(core.getInput('pullRequestId'), 10)
+    core.debug(`pullRequestId ${prId}`)
 
     const customTitle: string = core.getInput('customTitle')
     core.debug(`customTitle ${customTitle}`)
@@ -34,7 +34,7 @@ async function run(): Promise<void> {
       throw new Error('Coverage is undefined!')
     }
 
-    await report(coveredPercent, failedThreshold, pullRequestId, customTitle, customText)
+    await report(coveredPercent, failedThreshold, prId, customTitle, customText)
 
     if (coveredPercent < failedThreshold) {
       throw new Error(`Coverage is less than ${failedThreshold}%. (${coveredPercent}%)`)
