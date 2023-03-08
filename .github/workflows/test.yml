@@ -19,3 +19,5 @@ jobs:
         with:
           resultPath: dummy_coverage/.last_run.json
           token: ${{ secrets.GITHUB_TOKEN }}
+          customTitle: 'Customized title'
+          customText: 'Customized text'
