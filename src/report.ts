@@ -3,21 +3,24 @@ import * as github from '@actions/github'
 import replaceComment from '@aki77/actions-replace-comment'
 import {markdownTable} from 'markdown-table'
 
-export async function report(coveredPercent: number, failedThreshold: number): Promise<void> {
+export async function report(coveredPercent: number, failedThreshold: number, prId?: number, customTitle?: string, customText?: string): Promise<void> {
   const summaryTable = markdownTable([
     ['Covered', 'Threshold'],
     [`${coveredPercent}%`, `${failedThreshold}%`]
   ])
 
-  const pullRequestId = github.context.issue.number
+  const title = customTitle ? `## ${customTitle} Simplecov Report` : '## Simplecov Report' 
+  const pullRequestId = prId || github.context.issue.number
   if (pullRequestId) {
     await replaceComment({
       token: core.getInput('token', {required: true}),
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
       issue_number: pullRequestId,
-      body: `## Simplecov Report
+      body: `${title}
   ${summaryTable}
+  
+  ${customText}
   `
     })
   }
