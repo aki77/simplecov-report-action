@@ -1078,13 +1078,19 @@ function run() {
             core.debug(`failedThreshold ${failedThreshold}`);
             const resultPath = core.getInput('resultPath');
             core.debug(`resultPath ${resultPath}`);
+            const prId = Number.parseInt(core.getInput('pullRequestId'), 10);
+            core.debug(`pullRequestId ${prId}`);
+            const customTitle = core.getInput('customTitle');
+            core.debug(`customTitle ${customTitle}`);
+            const customText = core.getInput('customText');
+            core.debug(`customText ${customText}`);
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
             const json = require(path_1.default.resolve(process.env.GITHUB_WORKSPACE, resultPath));
             const coveredPercent = (_a = json.result.covered_percent) !== null && _a !== void 0 ? _a : json.result.line;
             if (coveredPercent === undefined) {
                 throw new Error('Coverage is undefined!');
             }
-            yield (0, report_1.report)(coveredPercent, failedThreshold);
+            yield (0, report_1.report)(coveredPercent, failedThreshold, prId, customTitle, customText);
             if (coveredPercent < failedThreshold) {
                 throw new Error(`Coverage is less than ${failedThreshold}%. (${coveredPercent}%)`);
             }
@@ -6589,26 +6595,31 @@ const core = __importStar(__webpack_require__(470));
 const github = __importStar(__webpack_require__(469));
 const actions_replace_comment_1 = __importDefault(__webpack_require__(395));
 const markdown_table_1 = __webpack_require__(366);
-function report(coveredPercent, failedThreshold) {
+function report(coveredPercent, failedThreshold, prId, customTitle, customText) {
     return __awaiter(this, void 0, void 0, function* () {
         const summaryTable = (0, markdown_table_1.markdownTable)([
             ['Covered', 'Threshold'],
             [`${coveredPercent}%`, `${failedThreshold}%`]
         ]);
-        const pullRequestId = github.context.issue.number;
+        const title = customTitle ? `## ${customTitle} Simplecov Report` : '## Simplecov Report';
+        core.debug(`title ${title}`);
+        const pullRequestId = prId || github.context.issue.number;
+        core.debug(`pullRequestId ${pullRequestId}`);
         if (pullRequestId) {
             yield (0, actions_replace_comment_1.default)({
                 token: core.getInput('token', { required: true }),
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
                 issue_number: pullRequestId,
-                body: `## Simplecov Report
+                body: `${title}
   ${summaryTable}
+  
+  ${customText}
   `
             });
         }
         yield core.summary
-            .addHeading('Simplecov Report')
+            .addHeading(`${customTitle} Simplecov Report`)
             .addTable([
             [
                 { data: 'Covered', header: true },
