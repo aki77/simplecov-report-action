@@ -1,3 +1,7 @@
+It's now recommended to use [octocov](https://github.com/k1LoW/octocov) instead of this approach.
+
+----
+
 # Simplecov Report
 
 A GitHub Action that report simplecov coverage.
