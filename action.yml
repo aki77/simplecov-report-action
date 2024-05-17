@@ -16,6 +16,15 @@ inputs:
   token:
     description: "Github token"
     required: true
+  pullRequestId:
+    description: "Pull Request ID. Useful when running this action triggered by another workflow (e.g. when using `workflow_dispatch`)."
+    required: false
+  customTitle:
+    description: 'Custom title'
+    required: false
+  customText:
+    description: 'Custom text'
+    required: false
 runs:
   using: "node16"
   main: "dist/index.js"

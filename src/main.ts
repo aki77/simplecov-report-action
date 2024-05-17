@@ -17,6 +17,15 @@ async function run(): Promise<void> {
     const resultPath: string = core.getInput('resultPath')
     core.debug(`resultPath ${resultPath}`)
 
+    const prId: number = Number.parseInt(core.getInput('pullRequestId'), 10)
+    core.debug(`pullRequestId ${prId}`)
+
+    const customTitle: string = core.getInput('customTitle')
+    core.debug(`customTitle ${customTitle}`)
+
+    const customText: string = core.getInput('customText')
+    core.debug(`customText ${customText}`)
+
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
     const json = require(path.resolve(process.env.GITHUB_WORKSPACE!, resultPath)) as Result
     const coveredPercent = json.result.covered_percent ?? json.result.line
@@ -25,7 +34,7 @@ async function run(): Promise<void> {
       throw new Error('Coverage is undefined!')
     }
 
-    await report(coveredPercent, failedThreshold)
+    await report(coveredPercent, failedThreshold, prId, customTitle, customText)
 
     if (coveredPercent < failedThreshold) {
       throw new Error(`Coverage is less than ${failedThreshold}%. (${coveredPercent}%)`)
